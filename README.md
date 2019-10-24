@@ -1,6 +1,6 @@
 ## A demo Mongoose OS for mqtt and ili9341
 ### overview
-This is an demo app, The relay on esp32 can be controlled via MQTT and the time and temperature are displayed on the screen.
+This is an demo app. The relay on esp32 can be controlled via MQTT and the time and temperature are displayed on the screen.
 ### config_schema:
 #### SPI and ili9341
 the cs connect to TFT_CS
