@@ -1,0 +1,90 @@
+author: mongoose-os
+description: A Mongoose OS app skeleton
+version: 1.0
+
+libs_version: ${mos.version}
+modules_version: ${mos.version}
+mongoose_os_version: ${mos.version}
+
+includes:
+  - include
+  - third_party/adafruit/include
+
+# Optional. List of tags for online search.
+tags:
+  - c
+  - spi
+  - hw
+  - docs:drivers:ILI9341 SPI
+# List of files / directories with C sources. No slashes at the end of dir names.
+sources:
+  - src
+  - third_party/adafruit/src
+
+# List of dirs. Files from these dirs will be copied to the device filesystem
+filesystem:
+  - fs
+
+# Custom configuration entries, settable via "device configuration"
+# Below is a custom firmware configuration example.
+# Uncomment and modify according to your needs:
+
+config_schema:
+ - ["app.pin", "i", 22, {title: "GPIO pin a sensor is attached to"}]
+ - ["spi.enable", true]
+ - ["spi.cs1_gpio", -1]
+ - ["spi.cs2_gpio", -1]
+ - ["spi.mosi_gpio", 18]
+ - ["spi.miso_gpio", 19]
+ - ["spi.sclk_gpio", 5]
+ - ["spi.cs0_gpio", 0]      # The ILI9341 CS pin
+
+ - ["ili9341", "o", {title: "ILI9341 settings"}]
+ - ["ili9341.cs_index", "i", 0, {title: "spi.cs*_gpio index, 0, 1 or 2"}]
+ - ["ili9341.spi_freq", "i", 20000000, {title: "SPI frequency"}]
+ - ["ili9341.dc_pin", "i", 33, {title: "TFT DC pin"}]
+ - ["ili9341.rst_pin", "i", 15, {title: "RST pin. If set, will be used to reinit the display."}]
+ - ["ili9341.width", "i", 320, {title: "TFT width in pixels"}]
+ - ["ili9341.height", "i", 240, {title: "TFT height in pixels"}]
+ - ["mqtt", "o", {title: "MQTT settings"}]
+ - ["mqtt1", "mqtt", {title: "Backup MQTT settings"}]
+ - ["mqtt.user", "s", "", {title: "User name"}]
+ - ["mqtt.pass", "s", "", {title: "Password"}]
+ - ["mqtt.server", "s", "suyaodong.top:1883", {title: "MQTT server"}]
+ - ["mqtt.enable", "b", true, {title: "Enable MQTT"}]
+ - ["mqtt.cloud_events", "b", true, {title: "Trigger cloud events when connected / disconnected"}]
+
+ - ["wifi.sta", "o", {title: "WiFi Station Config"}]
+ - ["wifi.sta.enable", "b", true, {title: "Connect to existing WiFi"}]
+ - ["wifi.sta.ssid", "s", "oden", {title: "SSID"}]
+ - ["wifi.sta.pass", "s", "55558888", {title: "Password", type: "password"}]
+ # sta1 and sta2 are exact copies of the above section and are used to support multiple station configurations.
+ # - ["wifi.sta1", "wifi.sta", {title: "WiFi Station Config 1"}]
+ - ["wifi.sta1.enable", false]
+ - ["wifi.sta1.ssid", "s", "", {title: "SSID"}]
+ - ["wifi.sta1.pass", "s", "", {title: "Password", type: "password"}]
+ # - ["wifi.sta2", "wifi.sta", {title: "WiFi Station Config 2"}]
+ - ["wifi.sta2.enable", false]
+ - ["wifi.sta2.ssid", "s", "", {title: "SSID"}]
+ - ["wifi.sta2.pass", "s", "", {title: "Password", type: "password"}]
+ - ["wifi.sta_cfg_idx", "i", 0, {title: "WiFi station config index to use, 0, 1 or 2"}]
+ - ["wifi.sta_connect_timeout", "i", 30, {title: "Timeout for connection, seconds"}]
+
+build_vars:
+  MGOS_WIFI_ENABLE_AP_STA: 0
+
+libs:
+  - origin: https://github.com/mongoose-os-libs/boards
+  - origin: https://github.com/mongoose-os-libs/ca-bundle
+  - origin: https://github.com/mongoose-os-libs/rpc-service-config
+  - origin: https://github.com/mongoose-os-libs/rpc-service-fs
+  - origin: https://github.com/mongoose-os-libs/rpc-uart
+  - origin: https://github.com/mongoose-os-libs/dht
+  - origin: https://github.com/mongoose-os-libs/spi
+  - origin: https://github.com/mongoose-os-libs/wifi
+  - origin: https://github.com/mongoose-os-libs/rpc-mqtt
+
+  # - origin: https://github.com/mongoose-os-libs/ili9341-spi
+
+# Used by the mos tool to catch mos binaries incompatible with this file format
+manifest_version: 2017-09-29
